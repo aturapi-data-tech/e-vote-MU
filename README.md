@@ -11,4 +11,4 @@
 Dasar Sirus Lite
 Laravel 10 + LiveWire + Breeze + Admin Flowbite CSS + DBOracle10g
 
-siRUS adalah project Sistem Informasi Rumah Sakit yang nantinnya akan kami kembangkan dari sistem management sampai e-RM untuk mendukung Peraturan Menteri Kesehatan (PMK) nomor 24 tahun 2022  
+evoteMU adalah project Pemilihan Elektronik yang di rancang khusus untuk pemilihan FORMATUR MUHAMMADIYAH, dengan aturan memilih 9 orang calon formatur pada setiap pemilihan nya
