@@ -1,4 +1,5 @@
-<div>
+<div class="bg-gradient-to-r from-green-200 to-yellow-100">
+    @section('title', $myTitle)
 
     <div class="px-4 pt-6 ">
         <div class="p-2 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 dark:bg-gray-800">
@@ -11,11 +12,15 @@
 
                     {{-- text --}}
                     <div class="bg-white ">
-                        <div class="flex justify-between h-16 p-2">
-                            <div>
-                                <h3 class="text-3xl font-bold text-gray-900 dark:text-white">{{ $myTitle }}</h3>
-                                <span
-                                    class="text-base font-medium text-gray-500 dark:text-gray-400">{{ $mySnipt }}</span>
+                        <div class="flex justify-between h-24 p-2">
+                            <div class="inline-flex">
+                                <img class="h-20 " src="{{ asset('storage/logo-new.png') }}" alt="logo-new.png" />
+                                <div class="ml-4">
+                                    <h3 class="text-3xl font-bold text-gray-900 dark:text-white">{{ $myTitle }}
+                                    </h3>
+                                    <span
+                                        class="text-base font-medium text-gray-500 dark:text-gray-400">{{ $mySnipt }}</span>
+                                </div>
                             </div>
                             <x-primary-button wire:click.prefent="store()">Simpan</x-primary-button>
                         </div>
@@ -23,9 +28,9 @@
                         <div class="grid w-full gap-1 md:grid-cols-9">
                             @foreach ($calonFormaturTerpilih as $key => $cF)
                                 <div
-                                    class="inline-flex items-center justify-between w-auto p-1 my-5 text-gray-800 bg-yellow-100 border-2 border-green-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-blue-600 hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
+                                    class="inline-flex items-center justify-between w-auto p-1 my-5 text-gray-500 bg-green-100 border-2 rounded-lg cursor-pointer border-grey-200 dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-blue-600 hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
                                     <div class="block">
-                                        <div class="w-auto text-xl">{{ $cF['no_urut'] . '.' . $cF['nama'] }}</div>
+                                        <div class="w-auto text-sm">{{ $cF['no_urut'] . '.' . $cF['nama'] }}</div>
                                     </div>
                                     <button type="button"
                                         class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-red-500 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
@@ -55,7 +60,7 @@
 
                     @foreach ($calonFormatur as $key => $cF)
                         @php
-                            $bgCardPropertyColor = $cF['vote_status'] == 1 ? 'bg-yellow-300' : 'bg-white';
+                            $bgCardPropertyColor = $cF['vote_status'] == 1 ? 'bg-yellow-100' : 'bg-white';
                         @endphp
                         <div class="w-full pt-2 pr-2 md:basis-1/5 ">
                             <a wire:click.prefent="voteFor({{ $key }},
@@ -65,15 +70,15 @@
 
                                 <div class="flex flex-col items-center pb-1">
                                     @if (empty($cF['foto']))
-                                        <img class="w-20 h-20 rounded-full shadow-lg"
+                                        <img class="rounded-full shadow-lg w-36 h-36"
                                             src="{{ asset('storage/6685417.jpg') }}" alt="{{ $cF['foto'] }}" />
                                     @else
-                                        <img class="w-20 h-20 rounded-full shadow-lg"
+                                        <img class="rounded-full shadow-lg w-36 h-36"
                                             src="{{ asset('images/' . $cF['foto']) }}" alt="{{ $cF['foto'] }}" />
                                     @endif
-                                    <h5 class="mb-1 text-2xl font-medium text-gray-900 dark:text-white">
-                                        {{ $cF['no_urut'] . '  ' . $cF['nama'] }}</h5>
-                                    <span class="text-sm text-gray-500 dark:text-gray-400"> {{ $cF['nama'] }}</span>
+
+                                    <span class="text-sm text-gray-500 dark:text-gray-400">
+                                        {{ $cF['no_urut'] . ' . ' . $cF['nama'] }}</span>
                                 </div>
 
                             </a>

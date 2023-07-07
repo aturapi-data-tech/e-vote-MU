@@ -92,6 +92,31 @@ class FormaturHasil extends Component
         $this->sortField = $field;
     }
 
+    public function apiChart()
+    {
+        $data = DB::table('votemu')
+            ->select(
+                DB::raw("votemu.no_urut||'. '||calon_formatur.nama as no_puls_nama"),
+                'votemu.no_urut as no_urut',
+                'calon_formatur.nama as nama',
+                DB::raw('count(votemu.no_urut) as vote_status')
+            )
+            ->join('calon_formatur', 'calon_formatur.no_urut', 'votemu.no_urut')
+            ->where('votemu.no_urut', 'like', '%' . $this->search . '%')
+            ->orWhere('calon_formatur.nama', 'like', '%' . $this->search . '%')
+            ->groupBy(
+                'votemu.no_urut',
+                'calon_formatur.nama',
+            )
+            ->orderBy('vote_status', 'desc')
+            ->orderBy('nama', 'asc')
+            ->limit(10);
+
+        $labels = $data->pluck('no_puls_nama');
+        $data = $data->pluck('vote_status');
+
+        return response()->json(compact('labels', 'data'));
+    }
 
 
     // select data start////////////////
@@ -114,6 +139,7 @@ class FormaturHasil extends Component
                         'calon_formatur.nama',
                     )
                     ->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc')
+                    ->orderBy('nama', 'asc')
                     ->paginate($this->limitPerPage),
                 'myTitle' => 'Calon Formatur ',
                 'mySnipt' => 'Hasil Voting Calon Formatur PDNA Tulungagung',

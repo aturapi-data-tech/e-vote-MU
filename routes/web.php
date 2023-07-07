@@ -46,6 +46,7 @@ Route::get('masterleveldua', MasterLevelDua::class)->middleware('auth')->name('M
 Route::get('calonFormatur', calonFormatur::class)->name('calonFormatur');
 Route::get('formaturVote', formaturVote::class)->name('formaturVote');
 Route::get('formaturHasil', formaturHasil::class)->name('formaturHasil');
+Route::get('apiChart', [formaturHasil::class, 'apiChart'])->name('api.chart');
 
 
 

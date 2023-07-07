@@ -1,34 +1,32 @@
-<div>
-
+<div class="bg-gradient-to-r from-green-200 to-yellow-100">
 
     <div class="px-4 pt-6">
         <div
             class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800">
             <!-- Card header -->
 
-            <h3 class="text-3xl font-bold text-gray-900 pl-[220px] text-start dark:text-white">{{ $myTitle }}</h3>
+            <div class="flex justify-between h-24 p-2">
+                <div class="inline-flex">
+                    <img class="h-20 " src="{{ asset('storage/logo-new.png') }}" alt="logo-new.png" />
+                    <div class="ml-4">
+                        <h3 class="text-3xl font-bold text-gray-900 dark:text-white">{{ $myTitle }}
+                        </h3>
+                        <span class="text-base font-medium text-gray-500 dark:text-gray-400">{{ $mySnipt }}</span>
+                    </div>
+                </div>
+            </div>
+
 
             <div class="flex justify-between">
                 <div class='w-1/2 pt-20 h-4/5'>
-                    <canvas id="myChart"></canvas>
+                    <canvas id="myChartx"></canvas>
                 </div>
 
                 <div class="w-[48%]">
                     <div class="">
 
 
-                        {{-- text --}}
-                        <div class="mb-5">
-                            <span
-                                class="text-base font-normal text-gray-500 dark:text-gray-400">{{ $mySnipt }}</span>
-                        </div>
-                        {{-- end text --}}
-
-
-
                         <div class="md:flex md:justify-between">
-
-
 
                             {{-- search --}}
                             <div class="relative pointer-events-auto md:w-1/2">
@@ -38,7 +36,8 @@
                                         <path d="m19 19-3.5-3.5" stroke="currentColor" stroke-width="2"
                                             stroke-linecap="round" stroke-linejoin="round"></path>
                                         <circle cx="11" cy="11" r="6" stroke="currentColor"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></circle>
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        </circle>
                                     </svg>
                                 </div>
                                 <x-text-input id="simpleSearch" name="namesimpleSearch" type="text" class="p-2 pl-10"
@@ -210,16 +209,7 @@
 
 
 
-    @php
-        $labels = [];
-        $calonFormatur
-            ->each(function ($item, $key) use (&$labels) {
-                $labels[] = $item->no_urut . '. ' . $item->nama;
-            })
-            ->toArray();
-        
-        $data = $calonFormatur->pluck('vote_status')->toArray();
-    @endphp
+
 
     {{-- push start ///////////////////////////////// --}}
     @push('scripts')
@@ -227,40 +217,38 @@
         <script src="{{ url('assets/js/jquery.min.js') }}"></script>
         <script src="{{ url('assets/plugins/toastr/toastr.min.js') }}"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
         <script>
-            const ctx = document.getElementById('myChart');
-
-            const labels = @json($labels);
-            const data = {
-                labels: labels,
-                datasets: [{
-                    label: 'Hasil Pemilihan Formatur',
-                    data: @json($data),
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(255, 159, 64, 0.2)',
-                        'rgba(255, 205, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(201, 203, 207, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgb(255, 99, 132)',
-                        'rgb(255, 159, 64)',
-                        'rgb(255, 205, 86)',
-                        'rgb(75, 192, 192)',
-                        'rgb(54, 162, 235)',
-                        'rgb(153, 102, 255)',
-                        'rgb(201, 203, 207)'
-                    ],
-                    borderWidth: 1
-                }]
-            };
-
-            const config = {
+            var ctxx = document.getElementById("myChartx");
+            var myChart = new Chart(ctxx, {
                 type: 'bar',
-                data: data,
+                data: {
+                    labels: ['x'],
+                    datasets: [{
+                        label: 'Hasil Pemilihan Formatur',
+                        data: [],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 159, 64, 0.2)',
+                            'rgba(255, 205, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(201, 203, 207, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgb(255, 99, 132)',
+                            'rgb(255, 159, 64)',
+                            'rgb(255, 205, 86)',
+                            'rgb(75, 192, 192)',
+                            'rgb(54, 162, 235)',
+                            'rgb(153, 102, 255)',
+                            'rgb(201, 203, 207)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
                 options: {
                     scales: {
                         y: {
@@ -268,14 +256,33 @@
                         }
                     }
                 },
-            };
+            });
 
-            const label = ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'];
+            var updateChart = function() {
+                $.ajax({
+                    url: "{{ route('api.chart') }}",
+                    type: 'GET',
+                    dataType: 'json',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(data) {
+                        myChart.data.labels = data.labels;
+                        myChart.data.datasets[0].data = data.data;
+                        myChart.update();
 
-            new Chart(ctx, config);
+
+                    },
+                    error: function(data) {
+                        console.log(data);
+                    }
+                });
+            }
+
+            setInterval(() => {
+                updateChart();
+            }, 2000);
         </script>
-
-
 
 
 

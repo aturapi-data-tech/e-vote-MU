@@ -128,7 +128,7 @@ class FormaturVote extends Component
             // ////////////////Remove nama From  collection//////////////
             $selected = [];
             foreach (collect($this->calonFormaturTerpilih) as  $item) {
-                $selected[] = json_decode(collect($item)->forget('nama'), true);
+                $selected[] = json_decode(collect($item)->forget(['nama', 'foto']), true);
             }
             $this->calonFormaturTerpilih = $selected;
             // ////////////////Remove nama From  collection//////////////

@@ -162,15 +162,22 @@ class CalonFormatur extends Component
 
         $rule = ($this->isOpenMode == 'insert') ? 'required|numeric|max:200|unique:calon_formatur,no_urut' :
             'required|numeric|max:200';
+        // logic photo ->if photo true make foto false
+        if ($this->photo) {
+            $this->table["foto"] = "";
+        };
+        // ->if foto false make foto rule
+        $rulePhoto = ($this->table["foto"]) ? '' : 'image|max:1024'; // 1MB Max
+        // ->if foto false make foto name as foto else create foto rulse
+        $filename = ($this->table["foto"]) ?  $this->table["foto"] : 'useravatars/' . time() . '.' . $this->photo->getClientOriginalExtension();
 
 
         $this->validate([
             'table.no_urut' => $rule,
             'table.nama' => 'required',
-            'photo' => 'image|max:1024', // 1MB Max
+            'photo' =>  $rulePhoto
         ], $customErrorMessages);
         // image 
-        $filename = 'useravatars/' . time() . '.' . $this->photo->getClientOriginalExtension();
 
         if ($this->isOpenMode == 'insert') {
             DB::table('calon_formatur')->insert([
@@ -187,8 +194,10 @@ class CalonFormatur extends Component
                     'nama' => $this->table["nama"],
                     'foto' => $filename
                 ]);
-            $this->photo->storeAs('photos', $filename);
         }
+
+        // uploadphoto if foto false
+        ($this->table["foto"]) ?: $this->photo->storeAs('photos', $filename);
 
         $this->closeModal();
         $this->resetInputFields();
@@ -216,7 +225,7 @@ class CalonFormatur extends Component
         $calonFOrmaatur = $this->findData($id);
         $this->table['no_urut'] = $id;
         $this->table['nama'] = $calonFOrmaatur->nama;
-        $this->photo = $calonFOrmaatur->foto;
+        $this->table['foto'] = $calonFOrmaatur->foto;
     }
     // show edit record end////////////////
 
