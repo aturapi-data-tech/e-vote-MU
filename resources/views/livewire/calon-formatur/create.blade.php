@@ -38,30 +38,39 @@
             </div>
 
 
+
+
             <form>
 
                 <div class="px-4 pt-5 pb-4 bg-white sm:p-6 sm:pb-4">
 
 
 
-                    <form>
-                        <x-input-label for="no_urut" :value="__('No Urut')" />
-                        <x-text-input id="no_urut" name="no_urut" class="block mt-1" required autofocus
-                            :disabled=$disabledProperty wire:model="table.no_urut" />
-                        @error('table.no_urut')
-                            <span class="text-red-500">{{ $message }}</span>
-                        @enderror
+                    <x-input-label for="no_urut" :value="__('No Urut')" />
+                    <x-text-input id="no_urut" name="no_urut" class="block mt-1" required autofocus
+                        :disabled=$disabledProperty wire:model="table.no_urut" />
+                    @error('table.no_urut')
+                        <span class="text-red-500">{{ $message }}</span>
+                    @enderror
 
 
-                        <x-input-label for="nama" :value="__('Nama Formatur')" class="block mt-1" />
-                        <x-text-input id="nama" name="nama" class="block mt-1" required
-                            :disabled=$disabledProperty wire:model="table.nama" />
+                    <x-input-label for="nama" :value="__('Nama Formatur')" class="block mt-1" />
+                    <x-text-input id="nama" name="nama" class="block mt-1" required :disabled=$disabledProperty
+                        wire:model="table.nama" />
 
 
-                        @error('table.nama')
-                            <span class="text-red-500">{{ $message }}</span>
-                        @enderror
-                    </form>
+                    @error('table.nama')
+                        <span class="text-red-500">{{ $message }}</span>
+                    @enderror
+
+                    <x-input-label for="foto" :value="__('Foto Formatur')" class="block mt-1" />
+                    <x-text-input id="foto" name="foto" class="block mt-1" required :disabled=$disabledProperty
+                        type="file" wire:model="photo" />
+
+
+                    @error('photo')
+                        <span class="text-red-500">{{ $message }}</span>
+                    @enderror
 
 
 

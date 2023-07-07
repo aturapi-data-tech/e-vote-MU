@@ -12,7 +12,8 @@ class FormaturVote extends Component
     public $table =
     [
         'no_urut' => "",
-        'nama' => ""
+        'nama' => "",
+        'foto' => ""
     ];
 
     public $calonFormatur = [];
@@ -94,7 +95,7 @@ class FormaturVote extends Component
     private function rendercalonFormatur()
     {
         if (empty($this->calonFormatur)) {
-            $calonFormatur = DB::table('calon_formatur')->select('no_urut', 'nama')
+            $calonFormatur = DB::table('calon_formatur')->select('no_urut', 'nama', 'foto')
                 ->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc')
                 ->get();
 

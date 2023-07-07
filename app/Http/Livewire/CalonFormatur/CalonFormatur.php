@@ -5,16 +5,20 @@ namespace App\Http\Livewire\CalonFormatur;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\DB;
+use Livewire\WithFileUploads;
 
 class CalonFormatur extends Component
 {
     use WithPagination;
+    use WithFileUploads;
 
     //  table data////////////////
+    public $photo;
     public $table =
     [
         'no_urut' => "",
-        'nama' => ""
+        'nama' => "",
+        'poto' => ""
     ];
 
 
@@ -162,21 +166,28 @@ class CalonFormatur extends Component
 
         $this->validate([
             'table.no_urut' => $rule,
-            'table.nama' => 'required'
+            'table.nama' => 'required',
+            'photo' => 'image|max:1024', // 1MB Max
         ], $customErrorMessages);
-
+        // image 
+        $filename = 'useravatars/' . time() . '.' . $this->photo->getClientOriginalExtension();
 
         if ($this->isOpenMode == 'insert') {
             DB::table('calon_formatur')->insert([
                 'no_urut' => $this->table["no_urut"],
-                'nama' => $this->table["nama"]
+                'nama' => $this->table["nama"],
+                'foto' => $filename
             ]);
         } else if ($this->isOpenMode == 'update') {
+
+            // dd(collect($this->photo));
             DB::table('calon_formatur')->where('no_urut', $id)
                 ->update([
                     'no_urut' => $this->table["no_urut"],
-                    'nama' => $this->table["nama"]
+                    'nama' => $this->table["nama"],
+                    'foto' => $filename
                 ]);
+            $this->photo->storeAs('photos', $filename);
         }
 
         $this->closeModal();
@@ -205,6 +216,7 @@ class CalonFormatur extends Component
         $calonFOrmaatur = $this->findData($id);
         $this->table['no_urut'] = $id;
         $this->table['nama'] = $calonFOrmaatur->nama;
+        $this->photo = $calonFOrmaatur->foto;
     }
     // show edit record end////////////////
 
@@ -241,7 +253,7 @@ class CalonFormatur extends Component
         return view(
             'livewire.calon-formatur.calon-formatur',
             [
-                'calonFormatur' => DB::table('calon_formatur')->select('no_urut', 'nama')
+                'calonFormatur' => DB::table('calon_formatur')->select('no_urut', 'nama', 'foto')
                     ->where('nama', 'like', '%' . $this->search . '%')
                     ->orWhere('no_urut', 'like', '%' . $this->search . '%')
                     ->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc')

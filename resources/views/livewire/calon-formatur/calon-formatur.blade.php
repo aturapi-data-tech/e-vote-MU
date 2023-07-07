@@ -134,6 +134,20 @@
                                                     </x-sort-link>
                                                 @endif
                                             </th>
+                                            <th scope="col" class="px-4 py-3">
+
+                                                @if ($sortField == 'foto')
+                                                    <x-sort-link :active=true wire:click.prevent="sortBy('foto')"
+                                                        role="button" href="#">
+                                                        foto
+                                                    </x-sort-link>
+                                                @else
+                                                    <x-sort-link :active=false wire:click.prevent="sortBy('foto')"
+                                                        role="button" href="#">
+                                                        foto
+                                                    </x-sort-link>
+                                                @endif
+                                            </th>
 
 
 
@@ -149,9 +163,23 @@
                                             <tr class="border-b group dark:border-gray-700">
                                                 <th scope="row"
                                                     class="px-4 py-3 font-medium text-gray-900 group-hover:bg-gray-100 group-hover:text-blue-700 whitespace-nowrap dark:text-white">
-                                                    {{ $cF->no_urut }}</th>
+                                                    {{ $cF->no_urut }}
+                                                </th>
                                                 <td class="px-4 py-3 group-hover:bg-gray-100 group-hover:text-blue-700">
-                                                    {{ $cF->nama }}</td>
+                                                    {{ $cF->nama }}
+                                                </td>
+                                                <td class="px-4 py-3 group-hover:bg-gray-100 group-hover:text-blue-700">
+                                                    @if (empty($cF->foto))
+                                                        <img class="w-10 h-10 rounded-full shadow-lg"
+                                                            src="{{ asset('storage/6685417.jpg') }}"
+                                                            alt="{{ $cF->foto }}" />
+                                                    @else
+                                                        <img class="w-10 h-10 rounded-full shadow-lg"
+                                                            src="{{ asset('images/' . $cF->foto) }}"
+                                                            alt="{{ $cF->foto }}" />
+                                                    @endif
+
+                                                </td>
 
 
                                                 <td
@@ -164,8 +192,9 @@
                                                         <x-light-button id="dropdownButton{{ $cF->no_urut }}"
                                                             class="inline-flex"
                                                             wire:click="$emit('pressDropdownButton','{{ $cF->no_urut }}')">
-                                                            <svg class="w-5 h-5" aria-hidden="true" fill="currentColor"
-                                                                viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                            <svg class="w-5 h-5" aria-hidden="true"
+                                                                fill="currentColor" viewbox="0 0 20 20"
+                                                                xmlns="http://www.w3.org/2000/svg">
                                                                 <path
                                                                     d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
                                                             </svg>

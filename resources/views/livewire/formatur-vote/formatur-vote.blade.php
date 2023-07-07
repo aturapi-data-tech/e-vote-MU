@@ -64,8 +64,13 @@
                                 class="block p-6 {{ $bgCardPropertyColor }} border border-gray-200 rounded-lg shadow hover:bg-blue-100 dark:bg-gray-700 dark:border-gray-700 dark:hover:bg-gray-700 ">
 
                                 <div class="flex flex-col items-center pb-1">
-                                    <img class="w-1/2 mb-3 rounded-full shadow-lg h-1/2" src="6685417.jpg"
-                                        alt="{{ $cF['nama'] }}" />
+                                    @if (empty($cF['foto']))
+                                        <img class="w-20 h-20 rounded-full shadow-lg"
+                                            src="{{ asset('storage/6685417.jpg') }}" alt="{{ $cF['foto'] }}" />
+                                    @else
+                                        <img class="w-20 h-20 rounded-full shadow-lg"
+                                            src="{{ asset('images/' . $cF['foto']) }}" alt="{{ $cF['foto'] }}" />
+                                    @endif
                                     <h5 class="mb-1 text-2xl font-medium text-gray-900 dark:text-white">
                                         {{ $cF['no_urut'] . '  ' . $cF['nama'] }}</h5>
                                     <span class="text-sm text-gray-500 dark:text-gray-400"> {{ $cF['nama'] }}</span>
