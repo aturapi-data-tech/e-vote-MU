@@ -20,8 +20,10 @@
 
 
     <!-- Scripts vite-->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
 
+    <link href="{{ asset('build/assets/app-c4e564ab.css') }}" rel="stylesheet">
+    <script src="{{ asset('build/assets/app-20106add.js') }}" defer></script>
 
 
 

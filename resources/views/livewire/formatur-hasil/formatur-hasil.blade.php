@@ -214,6 +214,7 @@
     {{-- push start ///////////////////////////////// --}}
     @push('scripts')
         {{-- script start --}}
+
         <script src="{{ url('assets/js/jquery.min.js') }}"></script>
         <script src="{{ url('assets/plugins/toastr/toastr.min.js') }}"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -258,32 +259,12 @@
                 },
             });
 
-            var updateChart = function() {
-                $.ajax({
-                    url: "{{ route('api.chart') }}",
-                    type: 'GET',
-                    dataType: 'json',
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: function(data) {
-                        myChart.data.labels = data.labels;
-                        myChart.data.datasets[0].data = data.data;
-                        myChart.update();
 
 
-                    },
-                    error: function(data) {
-                        console.log(data);
-                    }
-                });
-            }
-
-            setInterval(() => {
-                updateChart();
-            }, 2000);
+            myChart.data.labels = @json($labels);
+            myChart.data.datasets[0].data = @json($data);;
+            myChart.update();
         </script>
-
 
 
 

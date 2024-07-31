@@ -78,9 +78,9 @@ class FormaturVote extends Component
             $this->calonFormatur[$key]['vote_no'] = $this->maxVoteNo++;
             $this->rendercalonFormaturTerpilih();
 
-            ($this->calonFormatur[$key]['vote_status'] == 1)
-                ? $this->emit('toastr-success', "Vote untuk " . $noUrut . $nama .  " berhasil disimpan.")
-                : $this->emit('toastr-error', "Vote untuk " . $noUrut . $nama .   " berhasil dihapus.");
+            // ($this->calonFormatur[$key]['vote_status'] == 1)
+            //     ? $this->emit('toastr-success', "Vote untuk " . $noUrut . $nama .  " berhasil disimpan.")
+            //     : $this->emit('toastr-error', "Vote untuk " . $noUrut . $nama .   " berhasil dihapus.");
         } else {
             if ($this->calonFormatur[$key]['vote_status'] == 1) {
                 $this->calonFormatur[$key]['vote_status'] = 0;

@@ -122,6 +122,29 @@ class FormaturHasil extends Component
     // select data start////////////////
     public function render()
     {
+
+        $datax = DB::table('votemu')
+            ->select(
+                DB::raw("votemu.no_urut||'. '||calon_formatur.nama as no_puls_nama"),
+                'votemu.no_urut as no_urut',
+                'calon_formatur.nama as nama',
+                DB::raw('count(votemu.no_urut) as vote_status')
+            )
+            ->join('calon_formatur', 'calon_formatur.no_urut', 'votemu.no_urut')
+            ->where('votemu.no_urut', 'like', '%' . $this->search . '%')
+            ->orWhere('calon_formatur.nama', 'like', '%' . $this->search . '%')
+            ->groupBy(
+                'votemu.no_urut',
+                'calon_formatur.nama',
+            )
+            ->orderBy('vote_status', 'desc')
+            ->orderBy('nama', 'asc')
+            ->limit(10);
+
+        $labels = $datax->pluck('no_puls_nama');
+        $data = $datax->pluck('vote_status');
+
+
         return view(
             'livewire.formatur-hasil.formatur-hasil',
             [
@@ -144,7 +167,9 @@ class FormaturHasil extends Component
                 'myTitle' => 'Calon Formatur ',
                 'mySnipt' => 'Hasil Voting Calon Formatur PDNA Tulungagung',
                 'myProgram' => 'Calon Formatur',
-                'myLimitPerPages' => [5, 10, 15, 20, 100]
+                'myLimitPerPages' => [5, 10, 15, 20, 100],
+                'data' => $data,
+                'labels' => $labels
             ]
         );
     }
