@@ -41,12 +41,12 @@ Route::get('/', function () {
 
 
 
-Route::get('masterlevelsatu', MasterLevelSatu::class)->name('MasterLevelSatu');
-Route::get('masterleveldua', MasterLevelDua::class)->middleware('auth')->name('MasterLevelDua');
+// Route::get('masterlevelsatu', MasterLevelSatu::class)->name('MasterLevelSatu');
+// Route::get('masterleveldua', MasterLevelDua::class)->middleware('auth')->name('MasterLevelDua');
 
 
-Route::get('FormaturToken', FormaturToken::class)->name('FormaturToken');
-Route::get('calonFormatur', calonFormatur::class)->name('calonFormatur');
+// Route::get('FormaturToken', FormaturToken::class)->name('FormaturToken');
+// Route::get('calonFormatur', calonFormatur::class)->name('calonFormatur');
 Route::get('formaturVote', formaturVote::class)->name('formaturVote');
 Route::get('formaturHasil', formaturHasil::class)->name('formaturHasil');
 Route::get('apiChart', [formaturHasil::class, 'apiChart'])->name('api.chart');
