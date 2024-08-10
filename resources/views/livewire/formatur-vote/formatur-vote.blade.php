@@ -35,7 +35,7 @@
 
 
                         <div x-data
-                            x-bind:class="'grid w-full gap-1 grid-cols-11 sm:hidden {{ 'grid-cols-' . $formaturVoteNumber }}'">
+                            x-bind:class="'grid w-full gap-1 grid-cols-11 {{ 'grid-cols-' . $formaturVoteNumber }}'">
                             @for ($i = 1; $i <= env('APP_FORMATUR_VOTE', 9); $i++)
                                 <div class="text-sm font-semibold text-center bg-yellow-300 rounded-full ">
                                     {{ $i }}
@@ -46,7 +46,7 @@
 
 
                         <div x-data
-                            x-bind:class="'grid w-full gap-1 grid-cols-11 sm:hidden {{ 'grid-cols-' . $formaturVoteNumber }}'">
+                            x-bind:class="'grid w-full gap-1 grid-cols-11 {{ 'grid-cols-' . $formaturVoteNumber }}'">
                             @foreach ($calonFormaturTerpilih as $key => $cF)
                                 <div
                                     class="inline-flex items-center justify-between w-auto p-1 my-2 bg-yellow-300 border-2 rounded-lg cursor-pointer border-grey-200 dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-blue-600 hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
@@ -77,7 +77,7 @@
 
 
 
-                <div class="grid grid-cols-7 gap-2 sm:grid-cols-2">
+                <div class="grid grid-cols-7 gap-2">
 
 
                     @foreach ($calonFormatur as $key => $cF)
@@ -139,7 +139,7 @@
         </div>
     </div>
 
-    <div class="m-4 text-sm text-gray-700 bg-red-200 rounded-lg pl-[600px] sm:hidden">
+    <div class="m-4 text-sm text-gray-700 bg-red-200 rounded-lg pl-[600px]">
         <p>
             1. Nama - nama yang telah lolos verifikasi PANLIH menjadi calon formatur.
         </p>
