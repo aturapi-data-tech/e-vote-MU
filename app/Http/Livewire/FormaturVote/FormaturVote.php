@@ -16,9 +16,13 @@ class FormaturVote extends Component
         'foto' => ""
     ];
 
+    public bool $isOpen = true;
+
     public $calonFormatur = [];
     public $calonFormaturTerpilih = [];
-    public $maxVoteNo;
+    public string $token;
+    public int $maxVoteNo;
+    public int $formaturVoteNumber;
 
 
 
@@ -50,7 +54,9 @@ class FormaturVote extends Component
             'table',
             'calonFormatur',
             'calonFormaturTerpilih',
-            'maxVoteNo',
+            // 'maxVoteNo',
+            'isOpen',
+            // 'token'
 
         ]);
     }
@@ -73,9 +79,10 @@ class FormaturVote extends Component
     // Logic VoteFor Start////////////////
     public function voteFor($key, $noUrut, $nama): void
     {
-        if (collect($this->calonFormaturTerpilih)->count() < 9) {
+        if (collect($this->calonFormaturTerpilih)->count() <  env('APP_FORMATUR_VOTE', 9)) {
             $this->calonFormatur[$key]['vote_status'] = ($this->calonFormatur[$key]['vote_status']) == 0 ? 1 : 0;
-            $this->calonFormatur[$key]['vote_no'] = $this->maxVoteNo++;
+            // $this->calonFormatur[$key]['vote_no'] = $this->maxVoteNo++;
+            $this->calonFormatur[$key]['token'] = $this->token;
             $this->rendercalonFormaturTerpilih();
 
             // ($this->calonFormatur[$key]['vote_status'] == 1)
@@ -87,7 +94,7 @@ class FormaturVote extends Component
                 $this->rendercalonFormaturTerpilih();
                 $this->emit('toastr-error', "Vote untuk " . $noUrut . $nama .   " berhasil dihapus.");
             } else {
-                $this->emit('toastr-error', "Vote untuk calon Formatur tidak boleh lebih dari 9 orang.");
+                $this->emit('toastr-error', "Vote untuk calon Formatur tidak boleh lebih dari " . env('APP_FORMATUR_VOTE', 9) . " orang.");
             }
         }
     }
@@ -121,9 +128,10 @@ class FormaturVote extends Component
 
     public function store()
     {
-        if (collect($this->calonFormaturTerpilih)->count() != 9) {
+        if (collect($this->calonFormaturTerpilih)->count() != env('APP_FORMATUR_VOTE', 9)) {
 
-            $this->emit('toastr-error', "Anda tidak bisa menyimpan Vote untuk calon Formatur sebelum memilih 9 orang.");
+            $this->emit('toastr-error', "Anda tidak bisa menyimpan Vote untuk calon Formatur sebelum memilih " . env('APP_FORMATUR_VOTE', 9) . " orang.");
+            return;
         } else {
             // ////////////////Remove nama From  collection//////////////
             $selected = [];
@@ -136,11 +144,41 @@ class FormaturVote extends Component
             DB::table('votemu')->insert($this->calonFormaturTerpilih);
             $this->emit('toastr-success', "Vote untuk calon Formatur berhasil disimpan.");
             $this->resetInputFields();
+            $this->token = '';
         }
     }
 
+    public function validateToken($token)
+    {
+        $cektoken = DB::table('token')
+            ->where('token', '=', $token)
+            ->get();
+
+        $cektokenDigunakan = DB::table('token')
+            ->join('votemu', 'votemu.token', 'token.token')
+            ->where('votemu.token', '=', $token)
+            ->get();
+        // cek token ada atau tidak
+        if ($cektoken->count() == 0) {
+            $this->emit('toastr-error', "Token " . $token . " tidak ditemukan.");
+            return;
+        }
+        // cek token sudah digunakan atau belum
+        if ($cektokenDigunakan->count() > 0) {
+            $this->emit('toastr-error', "Token " . $token . " Sudah digunakan.");
+            return;
+        }
+
+        $this->emit('toastr-success', $token);
+        $this->token = $token;
+        $this->isOpen = false;
+    }
 
 
+    public function mount()
+    {
+        $this->formaturVoteNumber = (int)env('APP_FORMATUR_VOTE', 9);
+    }
 
 
     public function render()
@@ -151,7 +189,7 @@ class FormaturVote extends Component
             'livewire.formatur-vote.formatur-vote',
             [
 
-                'myTitle' => 'Calon Formatur PDNA Tulungagung',
+                'myTitle' => 'Calon Formatur ' . env('APP_FORMATUR', 'Sirus'),
                 'mySnipt' => 'Vote Calon Formatur',
                 'myProgram' => 'Calon Formatur',
                 'myLimitPerPages' => [5, 10, 15, 20, 100]

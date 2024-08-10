@@ -31,8 +31,8 @@
                                     class="flex-none mr-3">
                                     <path d="m19 19-3.5-3.5" stroke="currentColor" stroke-width="2"
                                         stroke-linecap="round" stroke-linejoin="round"></path>
-                                    <circle cx="11" cy="11" r="6" stroke="currentColor"
-                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></circle>
+                                    <circle cx="11" cy="11" r="6" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round"></circle>
                                 </svg>
                             </div>
                             <x-text-input id="simpleSearch" name="namesimpleSearch" type="text" class="p-2 pl-10"

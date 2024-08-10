@@ -19,7 +19,7 @@ class FormaturHasil extends Component
 
 
     // limit record per page -resetExcept////////////////
-    public $limitPerPage = 10;
+    public $limitPerPage = 15;
 
 
 
@@ -165,7 +165,7 @@ class FormaturHasil extends Component
                     ->orderBy('nama', 'asc')
                     ->paginate($this->limitPerPage),
                 'myTitle' => 'Calon Formatur ',
-                'mySnipt' => 'Hasil Voting Calon Formatur PDNA Tulungagung',
+                'mySnipt' => 'Hasil Voting Calon Formatur ' . env('APP_FORMATUR', 'Sirus'),
                 'myProgram' => 'Calon Formatur',
                 'myLimitPerPages' => [5, 10, 15, 20, 100],
                 'data' => $data,

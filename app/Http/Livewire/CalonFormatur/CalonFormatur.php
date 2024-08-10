@@ -177,7 +177,7 @@ class CalonFormatur extends Component
             'table.nama' => 'required',
             'photo' =>  $rulePhoto
         ], $customErrorMessages);
-        // image 
+        // image
 
         if ($this->isOpenMode == 'insert') {
             DB::table('calon_formatur')->insert([
@@ -224,8 +224,8 @@ class CalonFormatur extends Component
 
         $calonFOrmaatur = $this->findData($id);
         $this->table['no_urut'] = $id;
-        $this->table['nama'] = $calonFOrmaatur->nama;
-        $this->table['foto'] = $calonFOrmaatur->foto;
+        $this->table['nama'] = isset($calonFOrmaatur->nama) ? $calonFOrmaatur->nama : 'xx';
+        $this->table['foto'] = isset($calonFOrmaatur->foto) ? $calonFOrmaatur->foto : '';
     }
     // show edit record end////////////////
 
@@ -267,7 +267,7 @@ class CalonFormatur extends Component
                     ->orWhere('no_urut', 'like', '%' . $this->search . '%')
                     ->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc')
                     ->paginate($this->limitPerPage),
-                'myTitle' => 'Calon Formatur',
+                'myTitle' => 'Calon Formatur' . env('APP_FORMATUR', 'Sirus'),
                 'mySnipt' => 'Tambah Data Calon Formatur',
                 'myProgram' => 'Calon Formatur',
                 'myLimitPerPages' => [5, 10, 15, 20, 100]

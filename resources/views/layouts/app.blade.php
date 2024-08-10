@@ -20,10 +20,10 @@
 
 
     <!-- Scripts vite-->
-    {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    <link href="{{ asset('build/assets/app-c4e564ab.css') }}" rel="stylesheet">
-    <script src="{{ asset('build/assets/app-20106add.js') }}" defer></script>
+    <link href="{{ asset('build/assets/sirus.css') }}" rel="stylesheet">
+    <script src="{{ asset('build/assets/sirus.js') }}" defer></script>
 
 
 
@@ -171,7 +171,7 @@
 
 
 
-    <script src="https://flowbite-admin-dashboard.vercel.app//app.bundle.js"></script>
+    {{-- <script src="https://flowbite-admin-dashboard.vercel.app//app.bundle.js"></script> --}}
     <script src="assets/flowbite/dist/flowbite.min.js"></script>
 
 

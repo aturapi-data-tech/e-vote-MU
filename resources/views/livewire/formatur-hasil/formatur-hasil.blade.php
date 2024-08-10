@@ -1,17 +1,17 @@
-<div class="bg-gradient-to-r from-green-200 to-yellow-100">
+<div class="bg-gradient-to-r from-green-200 to-gray-100">
 
-    <div class="px-4 pt-6">
-        <div
-            class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+    <div class="px-4 pt-6 ">
+        <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm h-[calc(100dvh-25px)]">
             <!-- Card header -->
 
             <div class="flex justify-between h-24 p-2">
                 <div class="inline-flex">
-                    <img class="h-20 " src="{{ asset('storage/logo-new.png') }}" alt="logo-new.png" />
+                    {{-- <img class="h-20 " src="{{ asset('storage/logo-new.png') }}" alt="logo-new.png" /> --}}
+                    @include('livewire.logo.logo')
                     <div class="ml-4">
-                        <h3 class="text-3xl font-bold text-gray-900 dark:text-white">{{ $myTitle }}
+                        <h3 class="text-3xl font-bold text-gray-900">{{ $myTitle }}
                         </h3>
-                        <span class="text-base font-medium text-gray-500 dark:text-gray-400">{{ $mySnipt }}</span>
+                        <span class="text-base font-medium text-gray-500 ">{{ $mySnipt }}</span>
                     </div>
                 </div>
             </div>
@@ -89,9 +89,8 @@
                         <div class="overflow-x-auto rounded-lg">
                             <div class="inline-block min-w-full align-middle">
                                 <div class="overflow-hidden shadow sm:rounded-lg">
-                                    <table class="w-full text-sm text-left text-gray-500 table-auto dark:text-gray-400">
-                                        <thead
-                                            class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                    <table class="w-full text-sm text-left text-gray-500 table-auto ">
+                                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">
                                             <tr>
                                                 <th scope="col" class="w-2/12 px-4 py-3">
                                                     @if ($sortField == 'no_urut')
@@ -129,13 +128,13 @@
                                                 </th>
                                             </tr>
                                         </thead>
-                                        <tbody class="bg-white dark:bg-gray-800">
+                                        <tbody class="bg-white ">
 
 
                                             @foreach ($calonFormatur as $cF)
-                                                <tr class="border-b group dark:border-gray-700">
+                                                <tr class="border-b group ">
                                                     <th scope="row"
-                                                        class="px-4 py-3 font-medium text-gray-900 group-hover:bg-gray-100 group-hover:text-blue-700 whitespace-nowrap dark:text-white">
+                                                        class="px-4 py-3 font-medium text-gray-900 group-hover:bg-gray-100 group-hover:text-blue-700 whitespace-nowrap">
                                                         {{ $cF->no_urut }}</th>
                                                     <td
                                                         class="px-4 py-3 group-hover:bg-gray-100 group-hover:text-blue-700">
@@ -158,7 +157,7 @@
 
                                     {{-- no data found start --}}
                                     @if ($calonFormatur->count() == 0)
-                                        <div class="w-full p-4 text-sm text-center text-gray-500 dark:text-gray-400">
+                                        <div class="w-full p-4 text-sm text-center text-gray-500 ">
                                             {{ 'Data ' . $myProgram . ' Tidak ditemukan' }}
                                         </div>
                                     @endif
