@@ -139,6 +139,7 @@ class FormaturToken extends Component
 
         if ($cekVoteMU > 0) {
             $this->emit('toastr-error', "Anda tidak bisa menambah token, Proses Pemilihan sedang berlangsung.");
+            return;
         }
 
         if (!$jmlmyTokenRender) {

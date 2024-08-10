@@ -47,7 +47,38 @@
 
 
 
+            <div wire:poll class="my-2 mt-8 ml-2 text-sm">
+                <div class="grid grid-cols-2 gap-2 justify-items-end">
+                    <div>
+                        Waktu Sekarang:
+                    </div>
+                    <div class="justify-self-start">
+                        {{ Carbon\Carbon::now()->format('d/m/Y H:i:s') }}
+                    </div>
 
+                </div>
+
+                <div class="grid grid-cols-2 gap-1 justify-items-end">
+                    <div>
+                        Mulai Evoting:
+                    </div>
+                    <div class="justify-self-start">
+                        {{ env('APP_FORMATUR_VOTE_START') }}
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-1 justify-items-end">
+                    <div>
+                        Selesai Evoting:
+                    </div>
+                    <div class="justify-self-start">
+                        {{ env('APP_FORMATUR_VOTE_STOP') }}
+                    </div>
+                </div>
+
+
+
+            </div>
 
 
         </div>

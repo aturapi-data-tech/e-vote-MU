@@ -5,6 +5,9 @@ namespace App\Http\Livewire\FormaturVote;
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
 
+use Carbon\Carbon;
+
+
 class FormaturVote extends Component
 {
 
@@ -74,11 +77,27 @@ class FormaturVote extends Component
         $this->sortField = $field;
     }
 
+    private function checkingMyVoteTime(): bool
+    {
+        $start = Carbon::createFromFormat('d/m/Y H:i:s', env('APP_FORMATUR_VOTE_START'));
+        $end   = Carbon::createFromFormat('d/m/Y H:i:s', env('APP_FORMATUR_VOTE_STOP'));
+        $now   = Carbon::now();
 
+        if ($now->between($start, $end)) {
+            return true;
+        }
+        return false;
+    }
 
     // Logic VoteFor Start////////////////
     public function voteFor($key, $noUrut, $nama): void
     {
+        $checkingMyVoteTime = $this->checkingMyVoteTime();
+        if (!$checkingMyVoteTime) {
+            $this->emit('toastr-error', "Waktu Voting Tidak Valid");
+            return;
+        }
+
         if (collect($this->calonFormaturTerpilih)->count() <  env('APP_FORMATUR_VOTE', 9)) {
             $this->calonFormatur[$key]['vote_status'] = ($this->calonFormatur[$key]['vote_status']) == 0 ? 1 : 0;
             // $this->calonFormatur[$key]['vote_no'] = $this->maxVoteNo++;
@@ -150,6 +169,12 @@ class FormaturVote extends Component
 
     public function validateToken($token)
     {
+        $checkingMyVoteTime = $this->checkingMyVoteTime();
+        if (!$checkingMyVoteTime) {
+            $this->emit('toastr-error', "Waktu Voting Tidak Valid");
+            return;
+        }
+
         $cektoken = DB::table('token')
             ->where('token', '=', $token)
             ->get();
