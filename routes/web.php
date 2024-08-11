@@ -45,7 +45,7 @@ Route::get('/', function () {
 // Route::get('masterleveldua', MasterLevelDua::class)->middleware('auth')->name('MasterLevelDua');
 
 
-// Route::get('FormaturToken', FormaturToken::class)->name('FormaturToken');
+Route::get('FormaturToken', FormaturToken::class)->name('FormaturToken');
 // Route::get('calonFormatur', calonFormatur::class)->name('calonFormatur');
 Route::get('formaturVote', formaturVote::class)->name('formaturVote');
 Route::get('formaturHasil', formaturHasil::class)->name('formaturHasil');
